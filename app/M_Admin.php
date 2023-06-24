@@ -8,6 +8,6 @@ class M_Admin extends Model
 {
     protected $table = 'tbl_user';
     protected $primaryKey = 'id_user';
-    protected $fillable = ['ide_user', 'nama', 'email', 'password', 'token'];
+    protected $fillable = ['id_user', 'nama', 'email', 'password', 'token'];
 
 }

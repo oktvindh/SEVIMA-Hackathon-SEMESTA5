@@ -80,55 +80,55 @@ class Admin extends Controller
             }      
     }
     
-    // public function loginAdmin(Request $request){
-    //     $validator = Validator::make($request->all(), [
-    //         'email' => 'required | unique:tbl_user',
-    //         'password' => 'required'
+    public function loginAdmin(Request $request){
+        $validator = Validator::make($request->all(), [
+            'email' => 'required | unique:tbl_user',
+            'password' => 'required'
           
 
-    //     ]);
+        ]);
 
-    //     if($validator->fails()){
-    //         return response()->json([
-    //             'status' => 'gagal', 
-    //             'message' => $validator->messages()
-    //         ]);
-    //     }
-    //     $cek = M_Admin::where('email', $request->email)->count();
-    //     $admin = M_Admin::where('email', $request->email)->get();
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'gagal', 
+                'message' => $validator->messages()
+            ]);
+        }
+        $cek = M_Admin::where('email', $request->email)->count();
+        $admin = M_Admin::where('email', $request->email)->get();
 
-    //     if($cek > 0){
-    //         foreach ($admin as $adm) {
-    //             if($request->password == decrypt($adm->password)){
-    //                 $key = env('APP_KEY');
-    //                $data = array(
-    //                 "extime" => time()+(60*120),
-    //                 "id_admin" => $adm->id_user
-    //                );
-    //                $jwt = JWT::encode($data,$key);
-    //                return response()->json([
-    //                     'status' => 'berhasil',
-    //                     'message' => 'Berhasil login'
-    //                     'token' => $jwt;
+        if($cek > 0){
+            foreach ($admin as $adm) {
+                if($request->password == decrypt($adm->password)){
+                    $key = env('APP_KEY');
+                   $data = array(
+                    "extime" => time()+(60*120),
+                    "id_admin" => $adm->id_user
+                   );
+                   $jwt = JWT::encode($data,$key);
+                   return response()->json([
+                        'status' => 'berhasil',
+                        'message' => 'Berhasil login'
+                        'token' => $jwt;
 
-    //                 ]);
+                    ]);
 
-    //             }else{
-    //                 return response()->json([
-    //                     'status' => 'gagal',
-    //                     'message' => 'Password Salah'
+                }else{
+                    return response()->json([
+                        'status' => 'gagal',
+                        'message' => 'Password Salah'
 
-    //                 ]);
-    //             }
-    //         }
+                    ]);
+                }
+            }
 
-    //     }else{
-    //         return response()->json([
-    //             'status' => 'gagal',
-    //             'message' => 'Email tidak terdaftar'
-    //         ]);
-    //     }
-    // }
+        }else{
+            return response()->json([
+                'status' => 'gagal',
+                'message' => 'Email tidak terdaftar'
+            ]);
+        }
+    }
     
 }
 
