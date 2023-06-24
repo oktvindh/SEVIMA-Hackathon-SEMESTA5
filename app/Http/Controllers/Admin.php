@@ -15,6 +15,7 @@ use App\M_Admin;
 
 class Admin extends Controller
 {
+    // tambah admin
     public function tambahAdmin(Request $request){
         $validator = Validator::make($request->all(), [
             'nama' => 'required',
@@ -31,21 +32,21 @@ class Admin extends Controller
             ]);
         }
 
-             if(M_ADmin::create([
-                            'nama' => $request->nama,
-                            'email' => $request->email,
-                            'password' => encrypt($request->password)
-                        ])){
-                        return response()->json([
-                            'status' => 'berhasil',
-                            'message' => 'Data berhasil disimpan'
-                        ]);
-                        }else{
-                                return response()->json([
-                                'status' => 'gagal',
-                                'message' => 'Data gagal disimpan'
-                            ]);
-                        }  
+            //  if(M_Admin::create([
+            //                 'nama' => $request->nama,
+            //                 'email' => $request->email,
+            //                 'password' => encrypt($request->password)
+            //             ])){
+            //             return response()->json([
+            //                 'status' => 'berhasil',
+            //                 'message' => 'Data berhasil disimpan'
+            //             ]);
+            //             }else{
+            //                     return response()->json([
+            //                     'status' => 'gagal',
+            //                     'message' => 'Data gagal disimpan'
+            //                 ]);
+            //             }  
 
 
             $token = $request->token;
@@ -56,7 +57,7 @@ class Admin extends Controller
                 $decoded_array = (array) $decoded;
 
                 if($decoded_array['extime'] > time()){
-                        if(M_ADmin::create([
+                        if(M_Admin::create([
                             'nama' => $request->nama,
                             'email' => $request->email,
                             'password' => encrypt($request->password)
@@ -80,6 +81,7 @@ class Admin extends Controller
             }      
     }
     
+    // login admin
     public function loginAdmin(Request $request){
         $validator = Validator::make($request->all(), [
             'email' => 'required | unique:tbl_user',
@@ -128,6 +130,49 @@ class Admin extends Controller
                 'message' => 'Email tidak terdaftar'
             ]);
         }
+    }
+
+    // hapus admin
+    public function hapusAdmin(Request $request){
+        $validator = Validator::make($request->all(), [
+            'id_user' => 'required',            
+            'token' => 'required'
+
+        ]);
+
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'gagal', 
+                'message' => $validator->messages()
+            ]);
+        }
+
+            $token = $request->token;
+            $tokenDb = M_Admin::where('token', $token)->count();
+            if($tokenDb > 0){
+                $key = env('APP_KEY');
+                $decoded = JWT::decode($token, $key, array('HS256'));
+                $decoded_array = (array) $decoded;
+
+                if($decoded_array['extime'] > time()){
+                        if(M_Admin::where('id_user', $request->id_user->delete())){
+                        return response()->json([
+                            'status' => 'berhasil',
+                            'message' => 'Data berhasil dihapus'
+                        ]);
+                        }else{
+                                return response()->json([
+                                'status' => 'gagal',
+                                'message' => 'Data gagal dihapus'
+                            ]);
+                        }                   
+                }else{
+                    return response()->json([
+                    'status' => 'gagal',
+                    'message' => 'Token kadaluwarsa'
+                ]);
+                } 
+            }      
     }
     
 }
