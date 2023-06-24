@@ -26,3 +26,6 @@ https://drive.google.com/file/d/1aAdThqxF7PhXazT94fw06BDpq7A15eKT/view?usp=shari
 chatbot telegram library telebot pip python3
 
 PPT: https://www.canva.com/design/DAFmvWGtVkw/cyQC7aEricm7hlxCZ7Ku1g/edit?utm_content=DAFmvWGtVkw&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
+
+PDF:
+https://drive.google.com/file/d/11Lu8RH3_JawkcupwCLYRrL-tm7sUbvJ0/view?usp=sharing
