@@ -17,3 +17,5 @@ Laravel version 6.8
 PHP Version 7.4
 
 Linux Mint
+
+Create e-learning system with chatbot telegram integrated inside.
