@@ -342,9 +342,15 @@ class Response
         // headers
         foreach ($this->headers->allPreserveCaseWithoutCookies() as $name => $values) {
             $replace = 0 === strcasecmp($name, 'Content-Type');
+             if (null !== $previousValues && array_diff($previousValues, $values)) {
+                    header_remove($name);
+                    $previousValues = null;
+                }
+                $newValues = null === $previousValues ? $values : array_diff($values, $previousValues);
             foreach ($values as $value) {
                 header($name.': '.$value, $replace, $this->statusCode);
             }
+            
         }
 
         // cookies
