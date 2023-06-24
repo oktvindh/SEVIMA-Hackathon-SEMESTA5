@@ -24,3 +24,5 @@ Demonstration chatbot video,
 https://drive.google.com/file/d/1aAdThqxF7PhXazT94fw06BDpq7A15eKT/view?usp=sharing
 
 chatbot telegram library telebot pip python3
+
+PPT: https://www.canva.com/design/DAFmvWGtVkw/cyQC7aEricm7hlxCZ7Ku1g/edit?utm_content=DAFmvWGtVkw&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
