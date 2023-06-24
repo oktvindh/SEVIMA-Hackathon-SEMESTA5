@@ -24,39 +24,14 @@ class Admin extends Controller
 
         ]);
 
-            if($validator->fails()){
-                return response()->json([
-                    'status' => 'gagal', 
-                    'message' => $validator->messages()
-                ]);
-            }
-            if(M_ADmin::create([
-                            'nama' => $request->nama,
-                            'email' => $request->email,
-                            'password' => encrypt($request->password)
-                        ])){
-                        return response()->jeson([
-                            'status' => 'berhasil',
-                            'message' => 'Data berhasil disimpan'
-                        ]);
-                            }else{
-                                return response()->jeson([
-                                'status' => 'gagal',
-                                'message' => 'Data gagal disimpan'
-                            ]);
-                            }
+        if($validator->fails()){
+            return response()->json([
+                'status' => 'gagal', 
+                'message' => $validator->messages()
+            ]);
+        }
 
-
-
-            // $token = $request->token;
-            // $tokenDb = M_Admin::where('token', $token)->count();
-            // if($tokenDb > 0){
-            //     $key = env('APP_KEY');
-            //     $decoded = JWT::decode($token, $key, array('HS256'));
-            //     $decoded_array = (array) $decoded;
-
-            //     if($decoded_array['extime'] > time()){
-            //             if(M_ADmin::create([
+            // if(M_ADmin::create([
             //                 'nama' => $request->nama,
             //                 'email' => $request->email,
             //                 'password' => encrypt($request->password)
@@ -71,14 +46,39 @@ class Admin extends Controller
             //                     'message' => 'Data gagal disimpan'
             //                 ]);
             //                 }
-            //         else{
-            //                 return response()->jeson([
-            //                 'status' => 'gagal',
-            //                 'message' => 'Token kadaluwarsa'
-            //         ]);
-            //         }
-            //     }
-            // }        
+
+
+
+            $token = $request->token;
+            $tokenDb = M_Admin::where('token', $token)->count();
+            if($tokenDb > 0){
+                $key = env('APP_KEY');
+                $decoded = JWT::decode($token, $key, array('HS256'));
+                $decoded_array = (array) $decoded;
+
+                if($decoded_array['extime'] > time()){
+                        if(M_ADmin::create([
+                            'nama' => $request->nama,
+                            'email' => $request->email,
+                            'password' => encrypt($request->password)
+                        ])){
+                        return response()->json([
+                            'status' => 'berhasil',
+                            'message' => 'Data berhasil disimpan'
+                        ]);
+                        }else{
+                                return response()->json([
+                                'status' => 'gagal',
+                                'message' => 'Data gagal disimpan'
+                            ]);
+                        }                   
+                }else{
+                    return response()->json([
+                    'status' => 'gagal',
+                    'message' => 'Token kadaluwarsa'
+                ]);
+                } 
+            }      
     }    
 }
 
