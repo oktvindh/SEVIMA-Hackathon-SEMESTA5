@@ -22,3 +22,5 @@ Create e-learning system with chatbot telegram integrated inside.
 
 Demonstration chatbot video,
 https://drive.google.com/file/d/1aAdThqxF7PhXazT94fw06BDpq7A15eKT/view?usp=sharing
+
+chatbot telegram pip python3
